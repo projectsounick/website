@@ -44,7 +44,7 @@ export default function Home() {
       </h1>
 
       <p className="text-lg sm:text-2xl mt-4 text-white/90">
-        We&apos;re launching something amazing in fitness!
+        We&apos;re launching something amazing in fitness
       </p>
 
       {/* Countdown Timer */}
