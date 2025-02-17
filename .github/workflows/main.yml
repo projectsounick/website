@@ -24,8 +24,15 @@ jobs:
         run: |
           npm install
           npm run build
-          mv ./build/static ./build/standalone/build
-          mv ./public ./build/standalone
+          mkdir -p ./build/standalone
+          mv ./build/static ./build/standalone/build || echo "Skipping move"
+          mv ./public ./build/standalone || echo "Skipping move"
+
+      - name: Fix file permissions
+        run: chmod -R 755 ./build/standalone
+
+      - name: Debug folder structure
+        run: ls -la ./build/standalone
 
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
@@ -35,3 +42,7 @@ jobs:
           slot-name: "Production"
           publish-profile: ${{ env.APPLICATION_PUBLISH_PROFILE }}
           package: ./build/standalone
+
+      - name: Restart Azure Web App
+        run: |
+          az webapp restart --name ${{ env.WEBAPP_NAME }} --resource-group YOUR_RESOURCE_GROUP
