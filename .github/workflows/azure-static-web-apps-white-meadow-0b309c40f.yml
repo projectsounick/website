@@ -40,7 +40,7 @@ jobs:
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WHITE_MEADOW_0B309C40F }}
+          azure_static_web_apps_api_token: "fe1a6118d23ccd0e22e9a7a3794938e27abf7af102c98c814a4d29b2542cbeb204-b61c9067-45bb-4b8f-951d-678158c3205500f12100b309c40f"
           action: "upload"
           app_location: "/"  # Change this if your app is in a subfolder
           api_location: ""  # Leave blank if no API
