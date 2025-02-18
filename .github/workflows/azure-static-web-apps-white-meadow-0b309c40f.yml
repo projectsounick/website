@@ -48,7 +48,7 @@ jobs:
           action: "upload"
           app_location: "/"  # Change this if your app is in a subfolder
           api_location: ""  # Leave blank if no API
-          output_location: "build"  # Ensure this matches the build folder
+          output_location: "./"  # Ensure this matches the build folder
 
       - name: Print Deployment Logs
         run: |
