@@ -14,9 +14,9 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
-    permissions:
-       id-token: write
-       contents: read
+  # Optional: only if using OIDC (OpenID Connect)
+  id-token: write  # Only necessary if using OIDC
+  contents: read    # This permission is usually required for GitHub actions
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
