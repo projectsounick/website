@@ -45,7 +45,7 @@ jobs:
           app_location: "/"  # Change this if your app is in a subfolder
           api_location: ""  # Leave blank if no API
           output_location: "build"  # Ensure this matches the build folder
-          github_id_token: ${{ secrets.GITHUB_ID_TOKEN }}  # Using GitHub token directly
+         # github_id_token: ${{ secrets.GITHUB_ID_TOKEN }}  # Using GitHub token directly
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
