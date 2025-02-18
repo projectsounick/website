@@ -12,6 +12,10 @@ on:
 permissions:
   contents: read  # This permission is usually required for GitHub actions
 
+env:
+  ACTIONS_STEP_DEBUG: true
+  ACTIONS_RUNNER_DEBUG: true
+
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
@@ -40,11 +44,20 @@ jobs:
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: "fe1a6118d23ccd0e22e9a7a3794938e27abf7af102c98c814a4d29b2542cbeb204-b61c9067-45bb-4b8f-951d-678158c3205500f12100b309c40f"
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WHITE_MEADOW_0B309C40F }}
           action: "upload"
           app_location: "/"  # Change this if your app is in a subfolder
           api_location: ""  # Leave blank if no API
           output_location: "build"  # Ensure this matches the build folder
+
+      - name: Print Deployment Logs
+        run: |
+          echo "✅ Deployment Step Completed"
+          echo "🔹 Deployment Outcome: ${{ steps.builddeploy.outcome }}"
+          echo "🔹 Deployment Status: ${{ steps.builddeploy.conclusion }}"
+          echo "🔹 Full Logs:"
+          cat $GITHUB_WORKSPACE/build.log || echo "⚠️ No build.log found"
+        shell: bash
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -57,3 +70,10 @@ jobs:
         with:
           action: "close"
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WHITE_MEADOW_0B309C40F }}
+
+      - name: Print Close Job Logs
+        run: |
+          echo "✅ Close Pull Request Step Completed"
+          echo "🔹 Close Outcome: ${{ steps.closepullrequest.outcome }}"
+          echo "🔹 Close Status: ${{ steps.closepullrequest.conclusion }}"
+        shell: bash
